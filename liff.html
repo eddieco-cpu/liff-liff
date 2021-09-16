@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+            font-family: Arial;
+        }
+        img{
+            border-radius: 15px;
+        }
+        .closeWindow{
+            text-align: right;
+        }
+        button{
+            border-radius: 20px;
+            border: 1px solid white;
+            padding: 10px 15px;
+        }
+        span{
+            color: saddlebrown;
+        }
+        input{
+            padding: 5px 0;
+        }
+        #textForSubmit{
+            color: silver;
+        }
+        h4{
+            text-align: center;
+        }
+    </style>
+    <title>Line Liff 基本介紹</title>
+</head>
+<body>
+    <h4>基本介紹</h4>
+    <hr>
+    <div>
+        LIFF，全名是「LINE Front-end Framework」，是 LINE 官方提供的一個 Web App。
+        <br><br>
+        主要應用是可以用 JavaScript 抓取使用者的 LINE 資訊，像是暱稱、大頭照、狀態留言等。
+        <br><br>
+        進階一點的也可以透過使用者的帳號來發送訊息。當然，要使用者有勾選「許可」才可以這樣應用。
+    </div> 
+    <br><br>
+    
+    <!-- liff.getLanguage(); liff.getVersion(); liff.isInClient(); liff.isLoggedIn(); liff.getOS(); liff.getLineVersion(); -->
+    <h4>取得基本環境資訊</h4>
+    <hr>
+    <p>頁面中的語系: <span id="getLanguage"></span> </p>
+    <p>此 LIFF SDK 的版本: <span id="getVersion"></span> </p>
+    <p>目前 LIFF 是否是在 LINE App 中開啟: <span id="isInClient"></span> </p>
+    <p>使用者是否登入 LINE 帳號: <span id="isLoggedIn"></span></p>
+    <p>使用者的作業系統：web、android、ios ? <span id="getOS"></span> </p>
+    <p>使用者的 LINE 版本: <span id="lineVersion"></span> </p>
+    <br><br>
+
+    <!-- liff.getProfile() -->
+    <h4>取得使用者公開資料</h4>
+    <hr>
+    <p>使用者ID: <span id="userId">點我二下</span></p>
+    <p>使用者暱稱: <span id="displayName">點我</span></p>
+    <img src="https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-cute-boys-portraits-are-available-for-commercial-use-png-image_679024.jpg" alt="大頭照" id="pictureUrl" width="200px">
+    <span>點圖片</span>
+    <p>使用者狀態消息: <span id="statusMessage">點我</span></p>
+    <br><br>
+    
+    <!-- liff.getContext() -->
+    <h4>取得使用者類型</h4>
+    <hr>
+    <p>此時使用者透過哪種 type 點開 liff: <span id="contexttype">點我</span></p>
+    <p> <span id="contexttype2">解釋</span> -> <span id="typeIntro">type</span> </p>
+    <p>type id: <span id="typeId">點我</span></p>
+    <p>user id: <span id="userId_inGetContext">點我</span></p>
+    <p>LIFF 視窗的大小: <span id="viewType">點我</span></p>
+    <p>能否使用 shareTargetPicker 功能: <span id="permission"></span></p>
+    <br><br>
+
+    <!-- liff.getDecodedIDToken() -->
+    <h4>取得使用者 e-mail</h4>
+    <hr>
+    <div>
+        可以取得不代表一定能取得。
+        <br><br>
+        在使用者登入 LINE 帳號時，
+        <br>
+        「電子郵件帳號」那是可自由點選許可與否。
+        <br><br>
+        如果使用者不許可，或是未綁定；
+        <br>
+        一樣取不到 email。
+    </div> 
+    <p>使用者 e-mail: <span id="mail">點我</span></p>
+    <br><br>
+
+    <!-- liff.sendMessages() -->
+    <h4>LIFF 功能：傳訊息</h4>
+    <hr>
+    <div>
+        LIFF 的傳訊息功能有二個：
+        <br><br>
+        1) sendMessages ->
+        <br>
+        傳給打開此 liff 當下的群組、好友、LINE@等。
+        <br><br>
+        2) shareTargetPicker ->
+        <br>
+        傳給指定的好友。
+        <br><br>
+        不論是這二個的哪一個，使用者都必須要登入 LINE 帳號才能使用。
+    </div>
+    <p><input type="text" id="inputText"> 輸入想傳訊息</p> 
+    <p id="textForSubmit" >欲傳送的訊息內容</p>
+    <p>sendMessages -> <span id="sendMessages">點我</span></p>
+    <p>shareTargetPicker -> <span id="shareTargetPicker">點我</span></p>
+    <br><br>
+
+    <!-- liff.openWindow() -->
+    <h4>LIFF 功能：連結</h4>
+    <hr>
+    <div>
+        透過 Line LIFF 寫入導向，能夠設定
+        <br><br>
+        是否使用外部瀏覽器打開連結；
+        <br>
+        或者依然在 Line 內部的 LIFF 開啟。
+    </div>
+    <p>團專 -> <span id="openWindow">點我</span></p>
+    <br><br>
+
+    <p class="closeWindow"> 小結，關閉視窗 <button id="closeWindow">X</button></p>
+    <br>
+    <br>
+
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script>
+    //- 綁ID
+        var liffID = '1656430034-XoP1zE15';
+
+    //- 初始化 liff
+        liff.init({
+        liffId: liffID
+        }).then(function() {
+            console.log('LIFF init'); // 這邊開始寫其他功能
+
+            // 1 getMail
+            getmail()
+
+            // 2 DOM
+            linkDOM()
+            
+            // 3 get context
+            getContext()
+
+            // 4 closewindow
+            closeW()
+
+            // 5 getProfile
+            getProfile()
+
+            // 6 sendMessages
+            sendMsg()
+
+            // 7 openW
+            openW()
+            
+        }).catch(function(error) {
+        console.log(error);
+        });
+
+    //- 定義初始化後執行的 func 
+        
+        // 取得基本環境資訊
+        function linkDOM(){
+            // 引用 LIFF SDK 的頁面，頁面中的 lang 值
+            let getLanguage = liff.getLanguage()
+            document.getElementById('getLanguage').innerText = getLanguage
+
+            // LIFF SDK 的版本
+            let getVersion = liff.getVersion()
+            document.getElementById('getVersion').innerText = getVersion
+
+            // 使用者是否登入 LINE 帳號
+            let isLoggedIn = liff.isLoggedIn()
+            document.getElementById('isLoggedIn').innerText = isLoggedIn
+
+            // 使用者的 LINE 版本
+            let LineVersion = liff.getLineVersion()
+            document.getElementById('lineVersion').innerText = LineVersion
+
+            // 回傳是否由 LINE App 存取
+            let isInClient = liff.isInClient()
+            document.getElementById('isInClient').innerText = isInClient
+
+            // 回傳使用者作業系統：ios、android、web
+            let getOS = liff.getOS();
+            document.getElementById('getOS').innerText = getOS
+        }
+        
+        // 取得使用者資料 -> 取得使用者公開資料
+        function getProfile(){
+
+            liff.getProfile()
+                .then(function(profile) {
+                    
+                    document.getElementById('userId').addEventListener('click',(e)=>{
+                        let x = e.target
+                        x.innerText == '點我二下' ? x.innerText = profile.userId : x.innerText = '點我二下'
+                    })
+                    document.getElementById('displayName').addEventListener('click',(e)=>{
+                        let x = e.target
+                        x.innerText == '點我' ? x.innerText = profile.displayName : x.innerText = '點我'
+                    })
+                    document.getElementById('statusMessage').addEventListener('click',(e)=>{
+                        let x = e.target
+                        if( x.innerText == '點我' ){
+                        x.innerText = profile.statusMessage ? profile.statusMessage : '無'
+                        }else{
+                        x.innerText = '點我'
+                        }
+                    })
+                    document.getElementById('pictureUrl').addEventListener('click',(e)=>{
+                        let x = e.target
+                        x.src == "https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-cute-boys-portraits-are-available-for-commercial-use-png-image_679024.jpg" ?
+                        x.src = profile.pictureUrl : 
+                        x.src = "https://png.pngtree.com/png-vector/20190130/ourmid/pngtree-cute-boys-portraits-are-available-for-commercial-use-png-image_679024.jpg"
+                    })
+                    
+                    
+                });
+        }
+
+        // 取得使用者資料 -> 取得使用者類型
+        function getContext(){
+            // getContext
+            let context = liff.getContext() 
+            console.log(context)
+
+            // contexttype && intro
+            let contexttype = document.getElementById('contexttype')
+            let contexttype2 = document.getElementById('contexttype2')
+            let typeIntro = document.getElementById('typeIntro')
+
+            contexttype.addEventListener('click',(e)=>{
+                let x = e.target
+                x.innerText == '點我' ? x.innerText = context.type : x.innerText = '點我'
+                x.innerText == '點我' ? contexttype2.innerText = '解釋' : contexttype2.innerText = x.innerText
+
+                if( x.innerText == 'group' ){ typeIntro.innerText = '目前透過 < 群組 > 打開此 liff' }
+                else if( x.innerText == 'utou' ){ typeIntro.innerText = '目前透過 < 1v1 > 打開此 liff' }
+                else if( x.innerText == 'room' ){ typeIntro.innerText = '目前透過 < 多人聊天室 > 打開此 liff' }
+                else if( x.innerText == 'external' ){ typeIntro.innerText = '目前透過 < 外部瀏覽器 > 打開此 liff' }
+                else if( x.innerText == 'none' ){ typeIntro.innerText = '目前打開 liff 的方式不屬於基本 4種方法' }
+                else { typeIntro.innerText = 'type' }
+            })
+
+            document.getElementById('viewType').addEventListener('click',(e)=>{
+                let x = e.target
+                x.innerText == '點我' ? x.innerText = context.viewType : x.innerText = '點我'
+            })
+
+            document.getElementById('typeId').addEventListener('click',(e)=>{
+                let x = e.target
+                if( x.innerText == '點我' ){
+                x.innerText = context.groupId ? 'groupId-> ' + context.groupId 
+                            : context.roomId ? 'roomId-> ' + context.roomId 
+                            : '無'
+                }else{
+                x.innerText = '點我'
+                }
+            })
+
+            document.getElementById('userId_inGetContext').addEventListener('click',(e)=>{
+                let x = e.target
+                if( x.innerText == '點我' ){
+                x.innerText = context.userId ? 'userId-> ' + context.userId : '無'
+                }else{
+                x.innerText = '點我'
+                }
+            })
+
+            document.getElementById('permission').innerText = context.availability.shareTargetPicker.permission
+            
+        }
+
+        // 取得使用者資料 -> 取得使用者 email
+        function getmail(){
+            let user = liff.getDecodedIDToken();
+            let email = user.email;
+            document.getElementById('mail').addEventListener('click',(e)=>{
+                let x = e.target
+                if( x.innerText == '點我' ){
+                x.innerText = user.email ? user.email : '無'
+                }else{
+                x.innerText = '點我'
+                }
+            })
+        }
+
+        // liff 傳送訊息的功能
+        function sendMsg(){
+
+            let inputText = document.getElementById('inputText')
+            let textForSubmit = document.getElementById('textForSubmit')
+
+            inputText.addEventListener('input',(e)=>{
+                let content = inputText.value.split("").reverse().join("")
+                textForSubmit.innerText = inputText.value == '' ? '欲傳送的訊息內容' : content
+            })
+
+            // sendMessages
+            document.getElementById('sendMessages').addEventListener('click',function(){
+                liff.sendMessages([
+                {
+                    type: 'text',
+                    text: inputText.value == '' ? '傳送成功, This is Line liff' : textForSubmit.innerText
+                }
+                ]).then(function(res) {
+                    alert('傳送訊息成功，接著查看此聊天室')
+                    liff.closeWindow()
+                })
+                .catch(function(error) {
+                    alert('傳送訊息失敗')
+                });              
+            })
+
+            //shareTargetPicker
+            document.getElementById('shareTargetPicker').addEventListener('click',function(){
+                liff.shareTargetPicker([
+                {
+                    type: 'text',
+                    text: inputText.value == '' ? '傳送成功, This is Line liff' : textForSubmit.innerText
+                }
+                ])
+                .then(function(res) {
+                    alert('傳送訊息成功，問朋友看看有沒有收到吧')
+                    liff.closeWindow()
+                })
+                .catch(function(error) {
+                    alert('傳送訊息失敗')
+                })           
+            })
+        }
+
+        // openWindow
+        function openW(){
+            document.getElementById('openWindow').addEventListener('click',function(){
+                var yes = confirm('用Line LIFF 而不用 Browser 打開嗎？');
+                if (yes) {
+                    alert('用 Line LIFF 打開');
+                    liff.openWindow({
+                        url: 'https://liff.line.me/1656420922-1NeBQ6d2',
+                        external: false
+                    })
+                } else {
+                    alert('用 Browser 打開');
+                    liff.openWindow({
+                        url: 'https://liff.line.me/1656420922-1NeBQ6d2',
+                        external: true
+                    })
+                }
+                
+            })
+        }
+
+        // 關閉視窗
+        function closeW(){
+            document.getElementById('closeWindow').addEventListener('click',function(){
+                    var yes = confirm('確定關閉視窗嗎？');
+                if (yes) {
+                    alert('已確定');
+                    liff.closeWindow()
+                } else {
+                    alert('已取消');
+                }
+                
+            })
+        }
+    </script>
+</body>
+</html>
