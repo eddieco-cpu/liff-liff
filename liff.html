@@ -138,6 +138,7 @@
     <script>
     //- 綁ID
         var liffID = '1656430034-XoP1zE15';
+        var userIDname = '';
 
     //- 初始化 liff
         liff.init({
@@ -204,7 +205,8 @@
 
             liff.getProfile()
                 .then(function(profile) {
-                    
+                    userIDname = profile.displayName
+
                     document.getElementById('userId').addEventListener('click',(e)=>{
                         let x = e.target
                         x.innerText == '點我二下' ? x.innerText = profile.userId : x.innerText = '點我二下'
@@ -370,10 +372,10 @@
             document.getElementById('closeWindow').addEventListener('click',function(){
                     var yes = confirm('確定關閉視窗嗎？');
                 if (yes) {
-                    alert(`已確定，${profile.displayName}珍重再見`);
+                    alert(`已確定，${userIDname} 珍重再見`);
                     liff.closeWindow()
                 } else {
-                    alert(`已取消，${profile.displayName}歡迎繼續`);
+                    alert(`已取消，${userIDname} 歡迎回來`);
                 }
                 
             })
