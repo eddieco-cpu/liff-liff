@@ -248,11 +248,11 @@
                 x.innerText == '點我' ? x.innerText = context.type : x.innerText = '點我'
                 x.innerText == '點我' ? contexttype2.innerText = '解釋' : contexttype2.innerText = x.innerText
 
-                if( x.innerText == 'group' ){ typeIntro.innerText = '目前透過 < 群組 > 打開此 liff' }
-                else if( x.innerText == 'utou' ){ typeIntro.innerText = '目前透過 < 1v1 > 打開此 liff' }
-                else if( x.innerText == 'room' ){ typeIntro.innerText = '目前透過 < 多人聊天室 > 打開此 liff' }
-                else if( x.innerText == 'external' ){ typeIntro.innerText = '目前透過 < 外部瀏覽器 > 打開此 liff' }
-                else if( x.innerText == 'none' ){ typeIntro.innerText = '目前打開 liff 的方式不屬於基本 4種方法' }
+                if( x.innerText == 'group' ){ typeIntro.innerText = '目前透過 < 群組 > 打開此 LIFF' }
+                else if( x.innerText == 'utou' ){ typeIntro.innerText = '目前透過 < 1v1 > 打開此 LIFF' }
+                else if( x.innerText == 'room' ){ typeIntro.innerText = '目前透過 < 多人聊天室 > 打開此 LIFF' }
+                else if( x.innerText == 'external' ){ typeIntro.innerText = '目前透過 < 外部瀏覽器 > 打開此 LIFF' }
+                else if( x.innerText == 'none' ){ typeIntro.innerText = '目前打開 LIFF 的方式不屬於基本 4種方法' }
                 else { typeIntro.innerText = 'type' }
             })
 
@@ -315,7 +315,7 @@
                 liff.sendMessages([
                 {
                     type: 'text',
-                    text: inputText.value == '' ? '傳送成功, This is Line liff' : textForSubmit.innerText
+                    text: inputText.value == '' ? '傳送成功, This is Line LIFF' : textForSubmit.innerText
                 }
                 ]).then(function(res) {
                     alert('傳送訊息成功，接著查看此聊天室')
@@ -331,7 +331,7 @@
                 liff.shareTargetPicker([
                 {
                     type: 'text',
-                    text: inputText.value == '' ? '傳送成功, This is Line liff' : textForSubmit.innerText
+                    text: inputText.value == '' ? '傳送成功, This is Line LIFF' : textForSubmit.innerText
                 }
                 ])
                 .then(function(res) {
@@ -370,10 +370,10 @@
             document.getElementById('closeWindow').addEventListener('click',function(){
                     var yes = confirm('確定關閉視窗嗎？');
                 if (yes) {
-                    alert('已確定');
+                    alert(`已確定，${profile.displayName}珍重再見`);
                     liff.closeWindow()
                 } else {
-                    alert('已取消');
+                    alert(`已取消，${profile.displayName}歡迎繼續`);
                 }
                 
             })
