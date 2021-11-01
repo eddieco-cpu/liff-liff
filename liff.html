@@ -44,7 +44,8 @@
         <br><br>
         進階一點的也可以透過使用者的帳號來發送訊息。當然，要使用者有勾選「許可」才可以應用。
         <br><br>
-        以下進入 Line 環境與使用者資料互動，歡迎使用者<span id="welcomeUser"></span>。
+        以下進入 LINE環境與使用者資料互動。<br>
+        歡迎使用者<span id="welcomeUser"></span>。
     </div> 
     <br><br>
     
@@ -149,7 +150,7 @@
             console.log('LIFF init'); // 這邊開始寫其他功能
 
             // 0 show some info
-            document.getElementById('welcomeUser').innerText = userIDname
+            // document.getElementById('welcomeUser').innerText = userIDname
 
             // 1 getMail
             getmail()
@@ -211,6 +212,8 @@
             liff.getProfile()
                 .then(function(profile) {
                     userIDname = profile.displayName
+                    // 0 show some info
+                    document.getElementById('welcomeUser').innerText = userIDname
 
                     document.getElementById('userId').addEventListener('click',(e)=>{
                         let x = e.target
