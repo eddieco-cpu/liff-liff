@@ -372,12 +372,12 @@
             document.getElementById('closeWindow').addEventListener('click',function(){
                     var yes = confirm('確定關閉視窗嗎？');
                 if (yes) {
-                    // alert(`已確定，${userIDname} 珍重再見`);
-                    alert(`已確定`);
+                    alert(`已確定，${userIDname ? userIDname : '使用者'} 珍重再見`);
+                    // alert(`已確定`);
                     liff.closeWindow()
                 } else {
-                    // alert(`已取消，${userIDname} 歡迎回來`);
-                    alert(`已取消`);
+                    alert(`已取消，${userIDname ? userIDname : '使用者'} 歡迎回來`);
+                    // alert(`已取消`);
                 }
                 
             })
