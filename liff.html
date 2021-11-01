@@ -43,6 +43,8 @@
         主要應用是可以用 JavaScript 抓取使用者的 LINE 資訊，像是暱稱、大頭照、狀態留言等。
         <br><br>
         進階一點的也可以透過使用者的帳號來發送訊息。當然，要使用者有勾選「許可」才可以應用。
+        <br><br>
+        以下進入 Line 環境與使用者資料互動，歡迎使用者<span id="welcomeUser"></span>。
     </div> 
     <br><br>
     
@@ -145,6 +147,9 @@
         liffId: liffID
         }).then(function() {
             console.log('LIFF init'); // 這邊開始寫其他功能
+
+            // 0 show some info
+            document.getElementById('welcomeUser').innerText = userIDname
 
             // 1 getMail
             getmail()
